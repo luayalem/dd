@@ -1,0 +1,30 @@
+---
+name: boostfs_install
+
+templates:
+  pre-start.erb: bin/pre-start
+  ctl: bin/ctl
+ 
+
+packages:
+  - fuse
+  - boostfs_package
+
+properties:
+  boostfs_package.ddve_ip:
+    description: :"IP Address of DDVE"
+    default: []
+  boostfs_package.ddve_boost_folder:
+    description: "DDVE Storage-Unit Folder"
+    default: []
+  boostfs_package.ddve_mount:
+    description: "The Mount Point name to be created on the boostfs bosh release"    
+    default: []
+  boostfs_package.ddve_username:
+    description: "DDVE username"
+    default: []
+  boostfs_package.ddve_password:
+    description: "DDVE Boostfs user password"
+    default: []
+  
+  

@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+BOOSTFS_PAC=/var/vcap/packages/boostfs_package
+FUSE_PAC=/var/vcap/packages/fuse
+LOCATION=/var/vcap/jobs/boostfs_install
+
+cd ${FUSE_PAC}
+sudo dpkg -i fuse_2.9.2-4ubuntu4.14.04.1_amd64.deb
+cd ${BOOSTFS_PAC}
+sudo dpkg -i DDBoostFS_1.0.0.5_556666_amd64.deb
+sudo apt-get install expect -y
+
+sudo expect -c '
+set DDVE_IP <%= p("boostfs_package.ddve_ip") %>
+set DDVE_USER <%= p("boostfs_package.ddve_username") %>
+set DDVE_PWD <%= p("boostfs_package.ddve_password") %>
+set DDVE_STORAGE <%= p("boostfs_package.ddve_boost_folder") %>
+set DDVE_MOUNT <%= p("boostfs_package.ddve_mount")%>
+set timeout -1
+spawn /opt/emc/boostfs/bin/boostfs lockbox set -d ${DDVE_IP} -s ${DDVE_STORAGE} -u ${DDVE_USER}
+match_max 100000
+expect -exact "Enter storage unit user password:"
+send -- "${DDVE_PWD}\r"
+expect -exact "\r
+Enter storage unit user password again to confirm:"
+send -- "${DDVE_PWD}\r"
+expect eof
+'
+
+exit 0

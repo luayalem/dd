@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+export DD_MOUNT=/var/vcap/jobs/boostfs_install/<%=p('boostfs_package.ddve_mount')%>
+echo "runing smoke test"
+sudo touch ${DD_MOUNT}/smoke_test
+echo "Writting to ${DD_MOUNT}/smoke_test"
+echo "This is a smoke test running" >> ${DD_MOUNT}/smoke_test
+echo "Finished writting to ${DD_MOUNT}/smoke_test"
+if [ -e ${DD_MOUNT}/smoke_test ]; then
+  echo "Found file ${DD_MOUNT}/smoke_test and deleting it now"
+  sudo rm -rf ${DD_MOUNT}/smoke_test
+else echo "file was not created"
+     echo "Smoke test did not complete successfully"
+    exit 1
+fi
+if [ ! -f ${DD_MOUNT}/smoke_test ]; then
+    echo "File ${DD_MOUNT}/smoke_test was successfully deleted"
+    echo "Smoke test Completed successfully"
+else echo " File ${DD_MOUNT}/smoke_test did not get deleted"
+    echo "Smoke test did not complete successfully"
+    exit 1
+fi
+exit 0

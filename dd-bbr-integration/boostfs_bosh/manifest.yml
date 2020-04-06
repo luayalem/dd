@@ -1,0 +1,43 @@
+name: boostfs_bosh
+
+update:
+  canaries: 1
+  max_in_flight: 2
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+
+instance_groups:
+- name: boostfs_bosh
+  instances: 1
+  azs: [z1, z2]
+  networks:
+  - name: vip
+    static_ips: ((PUBLIC_IP_ADDRESS))
+  - name: default
+    default: [dns, gateway]
+  vm_type: default
+  stemcell: default
+  persistent_disk: 10000
+  jobs:
+  - name: boostfs_install
+    release: boostfs_bosh
+    properties:
+      boostfs_package:
+        ddve_ip: ((DDVE_IP))
+        ddve_boost_folder: ((DDVE_STORAGE-UNIT))
+        ddve_mount: ((LOCAL_HOST_MOUNT))
+        ddve_username: ((DDVE_USER))
+        ddve_password: ((DDVE_PASSWORD))
+  - name: smoke-test
+    release: boostfs_bosh
+    properties:
+      boostfs_package:
+        ddve_mount: ((LOCAL_HOST_MOUNT))
+       
+releases:
+- name: boostfs_bosh
+  version: latest
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest

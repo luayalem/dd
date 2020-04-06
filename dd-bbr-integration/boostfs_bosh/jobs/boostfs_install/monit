@@ -1,0 +1,4 @@
+check filesystem boostfs 
+  with path /var/vcap/jobs/boostfs_install/<%=p('boostfs_package.ddve_mount')%>
+  start program "/var/vcap/jobs/boostfs_install/bin/ctl start"
+  stop program "/var/vcap/jobs/boostfs_install/bin/ctl stop"

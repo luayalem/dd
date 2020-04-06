@@ -1,0 +1,21 @@
+#!/bin/bash
+
+export LOCATION=/var/vcap/jobs/boostfs_install
+
+case $1 in
+
+  start)
+
+   sudo mkdir -p "${LOCATION}/<%=p('boostfs_package.ddve_mount')%>"
+   sudo /opt/emc/boostfs/bin/boostfs mount -d <%= p('boostfs_package.ddve_ip') %> -s <%=p('boostfs_package.ddve_boost_folder') %> ${LOCATION}/<%=p('boostfs_package.ddve_mount')%>
+    ;;
+
+  stop)
+   sudo /opt/emc/boostfs/bin/boostfs umount ${LOCATION}/<%=p('boostfs_package.ddve_mount')%>
+   ;;
+
+  *)
+
+  echo "Usage: ctl {start|stop|console}" ;;
+esac
+exit 0

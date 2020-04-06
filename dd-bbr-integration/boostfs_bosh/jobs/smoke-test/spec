@@ -1,0 +1,10 @@
+---
+name: smoke-test
+
+templates:
+  post-start.erb: bin/post-start
+
+properties:
+  boostfs_package.ddve_mount:
+    description: "The Mount Point name to be created on the boostfs bosh release"    
+    default: [] 

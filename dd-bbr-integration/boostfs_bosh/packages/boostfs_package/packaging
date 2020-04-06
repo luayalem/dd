@@ -1,0 +1,3 @@
+set -e -x
+
+cp DDBoostFS_1.0.0.5_556666_amd64.deb ${BOSH_INSTALL_TARGET}

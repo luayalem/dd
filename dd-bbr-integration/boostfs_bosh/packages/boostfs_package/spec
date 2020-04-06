@@ -1,0 +1,7 @@
+---
+name: boostfs_package
+
+dependencies: []
+
+files:
+- DDBoostFS_1.0.0.5_556666_amd64.deb
