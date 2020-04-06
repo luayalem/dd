@@ -12,7 +12,7 @@ Install the script by pulling it from giit
 
 Example:
 
-     $ git clone git@durgitswarm1.cec.lab.emc.com:CNDP/dd-bbr-integration.git
+     $ git clone https://github.com/luayalem/dd.git
      
      
 #### Using bosh_bbr.sh
